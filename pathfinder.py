@@ -142,6 +142,7 @@ class PathFinder:
 			prev = self.path[-1] 	
 		'''
 		self.total_cost += self.completeGraph[start][self.path[-1]]['weight']
+		self.path.append(start)
 	def buildSubGraph(self, nodes):
 		graph = nx.Graph()
 		for n in nodes:
@@ -166,7 +167,7 @@ if __name__ == '__main__':
 	graph = gg.getGraph()
 	c1 = 1
 	c2 = 1
-	B = 8 
+	B = 7 
 	L = 16
 	finder = PathFinder(graph, c1, c2, B, L) 	
 	finder.findPath()
