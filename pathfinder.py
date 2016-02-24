@@ -167,7 +167,7 @@ if __name__ == '__main__':
 	graph = gg.getGraph()
 	c1 = 1
 	c2 = 1
-	B = 7 
+	B = 4 
 	L = 16
 	finder = PathFinder(graph, c1, c2, B, L) 	
 	finder.findPath()
