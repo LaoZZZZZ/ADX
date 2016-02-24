@@ -160,12 +160,13 @@ class PathFinder:
 		return self.total_cost
 
 if __name__ == '__main__':
-	f = 'test_graph.csv'
+	#f = 'test_graph.csv'
+	f = 'dimand_graph.csv'
 	gg = GG(f)
 	graph = gg.getGraph()
 	c1 = 1
 	c2 = 1
-	B = 12.5 
+	B = 8 
 	L = 16
 	finder = PathFinder(graph, c1, c2, B, L) 	
 	finder.findPath()
