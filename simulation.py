@@ -44,7 +44,7 @@ def simulation():
 				print("Invalid time interval bound!")
 				sys.exit()
 		elif o in ['-h','--help']:
-			print usage()
+			usage()
 			sys.exit()
 	# Get the optimum solution
 	opt_alg = BFTSP(B)
@@ -61,10 +61,10 @@ def simulation():
 		
 	
 def usage():
-	print '-f: the input graph file. This file should have four columns, which are x,y,start,end respectively'
-	print '-c: The C parameters. c1 and c2 and separated by a comma'
-	print '-d: The delta valud. default equals 4 * c2 / c1'
-	print '-v: Speed parameter'
-	print '-l: The right end for the fixed time interval'
+	print ('-f: the input graph file. This file should have four columns, which are x,y,start,end respectively')
+	print ('-c: The C parameters. c1 and c2 and separated by a comma')
+	print ('-d: The delta valud. default equals 4 * c2 / c1')
+	print ('-v: Speed parameter')
+	print ('-l: The right end for the fixed time interval')
 if __name__ == '__main__':
 	simulation()		

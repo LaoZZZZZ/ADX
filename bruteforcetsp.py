@@ -9,6 +9,8 @@ class BFTSP:
 		self.v = v
 	def opt(self, graph):
 		optimal_weight = sys.maxint	
+		average_weight = 0.0
+		num_feasible_sol = 0
 		path = []
 		nodes = graph.nodes()
 		nodes.sort()
@@ -17,9 +19,13 @@ class BFTSP:
 			tp.append(tp[0]) 
 			is_valid, total_weight = self.checkSolution(tp, graph)
 			if is_valid:
+				num_feasible_sol += 1
+				average_weight += total_weight
 				if optimal_weight > total_weight:
 					optimal_weight = total_weight
 					path = tp		
+		if num_feasible_sol > 0:
+			print("Average weight of feasible solutions:", average_weight/num_feasible_sol)
 		return (optimal_weight, path)
 	def checkSolution(self, path, graph):
 		if len(path) <= 1:
