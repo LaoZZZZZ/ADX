@@ -73,7 +73,7 @@ class PathFinder:
 		tsp = nx.minimum_spanning_tree(self.fixGraph)
 		mst_cutter = MSTCutter(self.B, 2*self.B)
 		components,num_invalid_comp = mst_cutter.findCuts(tsp)	
-		print("number of invalid pieces: " + str(num_invalid_comp))
+		print("Number of invalid pieces: " + str(num_invalid_comp))
 		self.id_pool = IDPool(self.graph.nodes())
 		for c in components:
 			self.comp_index[self.id_pool.nextId()] = c
@@ -140,9 +140,9 @@ class PathFinder:
 			self.total_cost += cost
 			self.path += path
 			prev = self.path[-1] 	
-		'''
 		self.total_cost += self.completeGraph[start][self.path[-1]]['weight']
 		self.path.append(start)
+		'''
 	def buildSubGraph(self, nodes):
 		graph = nx.Graph()
 		for n in nodes:

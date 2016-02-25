@@ -15,15 +15,17 @@ class BFTSP:
 		nodes = graph.nodes()
 		nodes.sort()
 		for p in itertools.permutations(nodes):
+			'''
 			tp = [n for n in p] 
 			tp.append(tp[0]) 
-			is_valid, total_weight = self.checkSolution(tp, graph)
+			'''
+			is_valid, total_weight = self.checkSolution(p, graph)
 			if is_valid:
 				num_feasible_sol += 1
 				average_weight += total_weight
 				if optimal_weight > total_weight:
 					optimal_weight = total_weight
-					path = tp		
+					path = p		
 		if num_feasible_sol > 0:
 			print("Average weight of feasible solutions:", average_weight/num_feasible_sol)
 		return (optimal_weight, path)
