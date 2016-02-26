@@ -19,7 +19,8 @@ class BFTSP:
 		intervals = [graph.node[n]['timespan'] for n in nodes]
 		perGen = perG(intervals,nodes)	
 		max_weight = 0
-		for p in perGen.next_permutation():
+		#for p in perGen.next_permutation():
+		for p in perGen.permutate():
 			is_valid, total_weight = self.checkSolution(p, graph)
 			if is_valid:
 				num_feasible_sol += 1
@@ -54,8 +55,8 @@ class BFTSP:
 		return (start + time, end + time)	
 if __name__ == '__main__':
 	#f = 'test_graph.csv'
-	#f = 'dimand_graph.csv'
-	f = 'input1.csv'
+	f = 'dimand_graph.csv'
+	#f = 'input1.csv'
 	g = GraphGenerator(f).getGraph()
 	#print(itertools.permutations(nodes))
 	solver = BFTSP(1)
