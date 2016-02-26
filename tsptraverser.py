@@ -5,14 +5,13 @@ from graph_loader import GraphGenerator as GG
 class tspSolver:
 	def __init__(self, complete_graph):
 		self.completeGraph = complete_graph
-	def traverse(self, graph):
+	def traverse(self, graph, start):
 		self.reset()
 		self.graph = nx.minimum_spanning_tree(graph)
+		self.dfs(start)
 		for n in self.graph.nodes():
-			self.dfs(n)
-		if self.visited and self.total > 0:
-			last_edge = self.completeGraph[self.last_visited][self.graph.nodes()[0]]['weight']
-			self.total += last_edge
+			if n != start:
+				self.dfs(n)
 		return (self.total, self.path) 		
 	def reset(self):
 		self.total = 0

@@ -1,0 +1,5 @@
+nohup: ignoring input
+./experiment.sh: line 3: 19969 Terminated              ./simulation.py -f input1.csv -l 8 -c 1,1 -v 1
+./experiment.sh: line 4: 19973 Terminated              ./simulation.py -f input2.csv -l 4 -c 1,1 -v 120
+./experiment.sh: line 5: 19977 Terminated              ./simulation.py -f input3.csv -l 4 -c 1,1 -v 120
+./experiment.sh: line 6: 19981 Terminated              ./simulation.py -f input4.csv -l 4 -c 1,1 -v 50

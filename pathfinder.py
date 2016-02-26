@@ -125,7 +125,7 @@ class PathFinder:
 				sub = self.sub_region[head[0]]
 			else:
 				sub = self.duplicates[head[0]]
-			cost,path = tsp_solver.traverse(self.buildSubGraph(sub))
+			cost,path = tsp_solver.traverse(self.buildSubGraph(sub), head[0])
 			self.total_cost += cost
 			self.path += path
 			prev = self.path[-1]		
@@ -162,26 +162,19 @@ class PathFinder:
 
 if __name__ == '__main__':
 	#f = 'test_graph.csv'
-	f = 'dimand_graph.csv'
+	#f = 'dimand_graph.csv'
+	f = 'input2.csv'
 	gg = GG(f)
 	graph = gg.getGraph()
 	c1 = 1
 	c2 = 1
-	B = 4 
-	L = 16
-	finder = PathFinder(graph, c1, c2, B, L) 	
+	delta = 10 
+	B = 2 
+	L = 8 
+	finder = PathFinder(graph, c1, c2, B, L, delta) 	
 	finder.findPath()
 	print(finder.total_cost)
 	print(finder.path)
 	for p in finder.path:
 		print(finder.completeGraph.node[p])
-	'''
-	fgraph = finder.fixGraph
-	for n in fgraph.nodes():
-		t = fgraph.node[n]
-		if not t:
-			continue
-		print(fgraph.node[n])	
-	print(len(fgraph.nodes()))
-	'''
 

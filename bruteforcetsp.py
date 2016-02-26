@@ -3,6 +3,8 @@
 import sys
 from graph_loader import GraphGenerator
 import itertools
+from intervalpermutation import IntervalPermutation
+from permutationGenerator import PermutationGenerator as perG 
 class BFTSP:
 	def __init__(self,v):
 		assert(v > 0)
@@ -14,20 +16,20 @@ class BFTSP:
 		path = []
 		nodes = graph.nodes()
 		nodes.sort()
-		for p in itertools.permutations(nodes):
-			'''
-			tp = [n for n in p] 
-			tp.append(tp[0]) 
-			'''
+		intervals = [graph.node[n]['timespan'] for n in nodes]
+		perGen = perG(intervals,nodes)	
+		max_weight = 0
+		for p in perGen.next_permutation():
 			is_valid, total_weight = self.checkSolution(p, graph)
 			if is_valid:
 				num_feasible_sol += 1
 				average_weight += total_weight
+				max_weight = max(max_weight, total_weight)
 				if optimal_weight > total_weight:
 					optimal_weight = total_weight
 					path = p		
 		if num_feasible_sol > 0:
-			print("Average weight of feasible solutions:", average_weight/num_feasible_sol)
+			print("The weight of worst solution: ", max_weight,"Average weight of feasible solutions:", average_weight/num_feasible_sol)
 		return (optimal_weight, path)
 	def checkSolution(self, path, graph):
 		if len(path) <= 1:
@@ -52,10 +54,11 @@ class BFTSP:
 		return (start + time, end + time)	
 if __name__ == '__main__':
 	#f = 'test_graph.csv'
-	f = 'dimand_graph.csv'
+	#f = 'dimand_graph.csv'
+	f = 'input1.csv'
 	g = GraphGenerator(f).getGraph()
 	#print(itertools.permutations(nodes))
-	solver = BFTSP(10)
+	solver = BFTSP(1)
 	weight, path = solver.opt(g)
 	print("Total weight: " + str(weight))
 	for p in path:

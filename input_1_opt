@@ -1,0 +1,15 @@
+nohup: ignoring input
+('Average weight of feasible solutions:', 20.344512391368763)
+Total weight: 14.6502815399
+{'position': [0.0, 1.0], 'timespan': [0.0, 1.0]}
+{'position': [1.0, 1.0], 'timespan': [1.0, 2.0]}
+{'position': [2.0, 2.0], 'timespan': [2.0, 3.0]}
+{'position': [2.0, 1.0], 'timespan': [3.0, 4.0]}
+{'position': [2.0, 0.0], 'timespan': [4.0, 5.0]}
+{'position': [1.0, 2.0], 'timespan': [5.0, 6.0]}
+{'position': [0.0, 2.0], 'timespan': [0.0, 8.0]}
+{'position': [0.0, 0.0], 'timespan': [0.0, 8.0]}
+{'position': [1.0, 0.0], 'timespan': [6.0, 7.0]}
+{'position': [3.0, 0.0], 'timespan': [0.0, 8.0]}
+{'position': [3.0, 1.0], 'timespan': [7.0, 8.0]}
+{'position': [3.0, 2.0], 'timespan': [0.0, 8.0]}
