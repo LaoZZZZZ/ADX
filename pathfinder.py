@@ -156,7 +156,6 @@ class PathFinder:
 
 if __name__ == '__main__':
 	#f = 'test_graph.csv'
-<<<<<<< HEAD
 	import time
 	start = time.time()
 	f = 'input3.csv'
@@ -168,18 +167,6 @@ if __name__ == '__main__':
 	B = 110 
 	L = 4 
 	finder = PathFinder(graph, c1, c2, B, L, None) 	
-=======
-	#f = 'dimand_graph.csv'
-	f = 'simulation1.csv'
-	gg = GG(f)
-	graph = gg.getGraph()
-	c1 = 1
-	c2 = 1
-	delta = 4 
-	B = 10 
-	L = 10 
-	finder = PathFinder(graph, c1, c2, B, L, delta) 	
->>>>>>> d022cdee6c77ded1f920556cc68d4d7c89c8baea
 	finder.findPath()
 	print(finder.total_cost)
 	print(finder.path)
