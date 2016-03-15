@@ -2,7 +2,7 @@
 
 import networkx as nx
 import sys
-
+from tsptraverser import tspSolver
 class MSTCutter:
 	def __init__(self, L, U):
 		self.u = U
@@ -22,6 +22,58 @@ class MSTCutter:
 		if num_invalid > 1:
 			print("Can not find a valid split!")
 		return (pieces,num_invalid)
+	def cutFromTSP(self, mst, completeGraph):
+		self.solver = tspSolver(completeGraph)	
+		found = 1e10	
+		sol = []
+		opt_weights = []
+		for n in mst.nodes():
+			start = n
+			invalid_num, pieces, weights = self.cutMST(mst, completeGraph, start)
+			if invalid_num < found:
+				found = invalid_num
+				sol = pieces		
+				opt_weights = weights
+			break
+		return (found, sol, opt_weights)
+	def cutMST(self, mst, completeGraph, start):
+		weight,path = self.solver.traverse(mst,start)
+		if weight >= self.l and weight <= self.u:
+			return (0,[path], [weight])
+		cumum_weight = 0
+		pieces = []
+		prev = path[0]
+		block = [prev]
+		weights = []
+		i = 1
+		while i < len(path):
+			if prev == None:
+				assert(len(block) == 0)
+				block.append(path[i])
+				prev = path[i]
+				i += 1
+			else:
+				while i < len(path) and cumum_weight + completeGraph[prev][path[i]]['weight'] < self.u:
+					#print(completeGraph[prev][path[i]]) 
+					cumum_weight += completeGraph[prev][path[i]]['weight']
+					prev = path[i]
+					block.append(prev)
+					i += 1
+				pieces.append(block[:])
+				weights.append(cumum_weight)
+				block = []
+				cumum_weight = 0
+				prev = None
+		if block:
+			pieces.append(block)
+			weights.append(cumum_weight)
+		num_invalid = 0
+		for w in weights:
+			if w > self.u or w < self.l:
+				num_invalid += 1
+		return (num_invalid , pieces, weights)
+			
+						
 	#botom up cut
 	def bottomUpCut(self, g):
 		pass		
@@ -71,15 +123,17 @@ class MSTCutter:
 	
 if __name__ == '__main__':
 	from graph_loader import GraphGenerator as GG
-	test_file = "mst_cut_test.csv"
-	l = GG(test_file)
-	mst = nx.minimum_spanning_tree(l.getGraph())
-	l = 5 
-	u = 10 
+	test_file = "input2.csv"
+	g = GG(test_file)
+	mst = nx.minimum_spanning_tree(g.getGraph())
+	l = 3 
+	u = 15 
 	cutter = MSTCutter(l,u)
-	pieces, num_invalid = cutter.findCuts(mst)
+	num_invalid, pieces, weights = cutter.cutFromTSP(mst, g.getGraph())
 	print("# of invalid pieces: " + str(num_invalid))
 	for p in pieces:
-		print(p)
+		cor = [g.getGraph().node[n]['position'] for n in p]
+		print(cor)
+	print(weights)
 	#cutter.findCuts(mst)
 	#print(cutter.comp)

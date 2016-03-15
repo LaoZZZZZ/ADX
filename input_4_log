@@ -1,1 +1,4 @@
-nohup: ignoring input
+('Approximate algorithm running time: ', 0.0007979869842529297)
+Appoximate weight, 422.318484668
+Approximate path, 0,13,4,12,1,2,3,11,10,9,5,6,7,8
+Accumulate weight, 111.803398875,103.494600075,0,94.5392913153

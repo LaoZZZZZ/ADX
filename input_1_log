@@ -1,9 +1,4 @@
-nohup: ignoring input
-('The weight of worst solution: ', 18.242640687119284, 'Average weight of feasible solutions:', 16.384956792773426)
-('Optimal running time : ', 14.13398003578186)
-Optimal weight, 15.2426406871
-Optimal path, 0,4,5,10,6,2,8,9,1,3,7,11
-('Approximate algorithm running time: ', 0.012640953063964844)
-Number of invalid pieces: 0
-Appoximate weight, 17.5764912225
-Approximate path, 4,5,10,6,2,3,11,9,1,0,8,7
+('Approximate algorithm running time: ', 0.0007448196411132812)
+Appoximate weight, 13.6568542495
+Approximate path, 4,8,5,10,6,2,3,9,1,0,7,11
+Accumulate weight, 1.0,0,0,0,1.0,0,1.0,1.0

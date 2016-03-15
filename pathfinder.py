@@ -20,6 +20,8 @@ class PathFinder:
 			self.delta = 4 * c2/c1
 		else:
 			self.delta = delta
+		self.c1 = c1
+		self.c2 = c2
 		self.L = L
 		self.B = B
 		self.fixGraph = nx.Graph()
@@ -70,10 +72,13 @@ class PathFinder:
 	# Cut this mst into pieces.
 	def cutGraph(self):
 		# Starts to cut the MST
-		tsp = nx.minimum_spanning_tree(self.fixGraph)
-		mst_cutter = MSTCutter(self.B, 2*self.B)
-		components,num_invalid_comp = mst_cutter.findCuts(tsp)	
-		print("Number of invalid pieces: " + str(num_invalid_comp))
+		mst = nx.minimum_spanning_tree(self.fixGraph)
+		mst_cutter = MSTCutter(self.c1 * self.B, self.c2*self.B)
+		#components,num_invalid_comp = mst_cutter.findCuts(tsp)	
+		num_invalid_comp,components, weights = mst_cutter.cutFromTSP(mst,self.completeGraph)	
+		#print("Number of invalid pieces: " + str(num_invalid_comp))
+		#print("Weights at each pieces: " + ','.join(map(str, weights)))
+		#print("Cutted pieces:")
 		self.id_pool = IDPool(self.graph.nodes())
 		for c in components:
 			self.comp_index[self.id_pool.nextId()] = c
@@ -114,9 +119,11 @@ class PathFinder:
 		start = None
 		headers = [(n,self.completeGraph.node[n]) for n in self.duplicates.keys()]
 		headers.sort(key = lambda x :x[1]['timespan'][0]) 
+		self.block_weight = []
 		for head in headers:
 			if prev:
 				self.total_cost += self.completeGraph[prev][head[0]]['weight']
+				self.block_weight.append(self.completeGraph[prev][head[0]]['weight'])
 			else:
 				start = head[0]
 				prev = head[0]
@@ -126,23 +133,10 @@ class PathFinder:
 			else:
 				sub = self.duplicates[head[0]]
 			cost,path = tsp_solver.traverse(self.buildSubGraph(sub), head[0])
+			self.block_weight.append(cost)
 			self.total_cost += cost
 			self.path += path
 			prev = self.path[-1]		
-		'''
-		for head, sub in self.sub_region.items():
-			if prev:
-				self.total_cost += self.completeGraph[prev][head]['weight']
-			else:
-				start = head
-				prev = head	
-			cost,path = tsp_solver.traverse(self.buildSubGraph(sub))
-			self.total_cost += cost
-			self.path += path
-			prev = self.path[-1] 	
-		self.total_cost += self.completeGraph[start][self.path[-1]]['weight']
-		self.path.append(start)
-		'''
 	def buildSubGraph(self, nodes):
 		graph = nx.Graph()
 		for n in nodes:
@@ -162,19 +156,22 @@ class PathFinder:
 
 if __name__ == '__main__':
 	#f = 'test_graph.csv'
-	f = 'dimand_graph.csv'
+	import time
+	start = time.time()
+	f = 'input3.csv'
 	#f = 'input2.csv'
 	gg = GG(f)
 	graph = gg.getGraph()
 	c1 = 1
-	c2 = 1
-	delta = 4 
-	B = 1 
-	L = 8 
-	finder = PathFinder(graph, c1, c2, B, L, delta) 	
+	c2 = 2 
+	B = 110 
+	L = 4 
+	finder = PathFinder(graph, c1, c2, B, L, None) 	
 	finder.findPath()
 	print(finder.total_cost)
 	print(finder.path)
 	for p in finder.path:
 		print(finder.completeGraph.node[p])
+	print(finder.block_weight)
+	print(time.time() - start)
 

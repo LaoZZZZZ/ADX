@@ -23,15 +23,17 @@ class BFTSP:
 		for p in perGen.permutate():
 			is_valid, total_weight = self.checkSolution(p, graph)
 			if is_valid:
+				assert(len(p) > 0)
 				num_feasible_sol += 1
 				average_weight += total_weight
 				max_weight = max(max_weight, total_weight)
 				if optimal_weight > total_weight:
 					optimal_weight = total_weight
-					path = p		
+					path = p[:]		
 		if num_feasible_sol > 0:
 			print("The weight of worst solution: ", max_weight,"Average weight of feasible solutions:", average_weight/num_feasible_sol)
-		return (optimal_weight, path)
+		print(path)
+		return (optimal_weight, path[:])
 	def checkSolution(self, path, graph):
 		if len(path) <= 1:
 			return True
@@ -62,6 +64,7 @@ if __name__ == '__main__':
 	solver = BFTSP(1)
 	weight, path = solver.opt(g)
 	print("Total weight: " + str(weight))
+	print("path: " + ','.join(map(str,path)))
 	for p in path:
 		print(g.node[p])	
 
